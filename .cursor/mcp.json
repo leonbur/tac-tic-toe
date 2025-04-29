@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "tac-tic-toe-metals": {
+      "url": "http://localhost:34757/sse"
+    }
+  }
+}

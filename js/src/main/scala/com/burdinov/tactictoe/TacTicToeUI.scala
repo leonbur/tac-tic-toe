@@ -1,0 +1,154 @@
+package com.burdinov.tactictoe
+
+import org.scalajs.dom
+import org.scalajs.dom.document
+import org.scalajs.dom.html
+import scala.scalajs.js.annotation.JSExportTopLevel
+import Player.*
+import Game.*
+
+@JSExportTopLevel("TacTicToeUI")
+object TacTicToeUI:
+  def setupUI(): Unit =
+    val container = document.getElementById("app")
+    val gameTitle = document.createElement("h1")
+    gameTitle.textContent = "Tac-Tic-Toe"
+    container.appendChild(gameTitle)
+
+    var game = Game.emptyNested 
+    renderGame(game, container)
+
+  def renderGame(game: Game, container: dom.Element): Unit =
+    // Clear previous content
+    while container.childNodes.length > 1 do // Keep the title
+      container.removeChild(container.lastChild)
+
+    val gameBoard = document.createElement("div").asInstanceOf[dom.html.Div]
+    gameBoard.className = "game-board"
+    
+    // Create the outer board
+    val outerBoard = document.createElement("div").asInstanceOf[dom.html.Div]
+    outerBoard.className = "outer-board"
+    
+    // Determine which board is valid for the next move
+    val nextValidBoardIndex = game.nextValidBoard
+    
+    // Render each cell of the outer board
+    for (outerCell, outerIdx) <- game.cells.zipWithIndex do
+      val outerCellDiv = document.createElement("div").asInstanceOf[dom.html.Div]
+      outerCellDiv.className = "outer-cell"
+      
+      outerCell match
+        case innerBoard: Vector[Player] =>
+          // Create inner board container with border
+          val innerBoardContainer = document.createElement("div").asInstanceOf[dom.html.Div]
+          innerBoardContainer.className = "inner-board-container"
+          
+          // Create inner board
+          val innerBoardDiv = document.createElement("div").asInstanceOf[dom.html.Div]
+          innerBoardDiv.className = "inner-board"
+          
+          // Check if this inner board is won
+          getBoardWinner(innerBoard) match
+            case Some(winner) =>
+              innerBoardDiv.className = s"inner-board winner-${winner.asString.toLowerCase}"
+              
+              // Create a centered winner marker div
+              val winnerMarker = document.createElement("div").asInstanceOf[dom.html.Div]
+              winnerMarker.className = "winner-marker"
+              winnerMarker.textContent = winner.asString
+              innerBoardDiv.appendChild(winnerMarker)
+            case None =>
+              // Check if board is full but not won
+              if innerBoard.forall(_ != Player.Empty) then
+                innerBoardContainer.className += " full"
+              
+              // Render inner board cells
+              for (innerCell, innerIdx) <- innerBoard.zipWithIndex do
+                val cellButton = document.createElement("button").asInstanceOf[dom.html.Button]
+                cellButton.className = "cell"
+                innerCell match
+                  case Player.X => 
+                    cellButton.textContent = "X"
+                    cellButton.className += " x"
+                  case Player.O => 
+                    cellButton.textContent = "O"
+                    cellButton.className += " o"
+                  case Player.Empty => 
+                    cellButton.textContent = ""
+                    // Only enable click if this is a valid move AND the game isn't over
+                    val gameIsOver = game.getWinner.isDefined
+                    val isMoveAllowed = !gameIsOver && (nextValidBoardIndex match
+                      case Some(posIndex) if game.isTargetBoardPlayable(posIndex) => 
+                        posIndex == outerIdx
+                      case Some(_) => 
+                        // If target board is full/won, can play anywhere
+                        true
+                      case None => 
+                        // First move or free choice
+                        true
+                    )
+                    
+                    if isMoveAllowed then
+                      cellButton.onclick = _ => makeMove(game, outerIdx, innerIdx, container)
+                    else
+                      cellButton.disabled = true
+                      cellButton.onclick = _ => makeMove(game, outerIdx, innerIdx, container)
+                
+                innerBoardDiv.appendChild(cellButton)
+          
+          innerBoardContainer.appendChild(innerBoardDiv)
+          outerCellDiv.appendChild(innerBoardContainer)
+          
+        case player: Player =>
+          outerCellDiv.textContent = player.asString
+          
+          outerCellDiv.className += s" inner-board-container winner-${player.asString.toLowerCase}"
+      
+      outerBoard.appendChild(outerCellDiv)
+    
+    gameBoard.appendChild(outerBoard)
+    
+    // Add game status
+    val status = document.createElement("div").asInstanceOf[dom.html.Div]
+    status.className = "status"
+    if game.getWinner.isDefined then
+      status.className += " game-over"
+      status.textContent = s"Game Over! ${game.getWinner.get.asString} wins!"
+    else if game.isTie then
+      status.className += " game-over tie"
+      status.textContent = "Game Over! It's a tie!"
+    else
+      val nextMoveInfo = game.nextValidBoard match
+        case Some(pos) if game.isTargetBoardPlayable(pos) =>
+          s"${game.currentPlayer.asString}'s turn - Must play in board $pos"
+        case Some(_) =>
+          s"${game.currentPlayer.asString}'s turn - Can play in any available board"
+        case None =>
+          s"${game.currentPlayer.asString}'s turn - Can play in any board"
+      status.textContent = nextMoveInfo
+    
+    gameBoard.appendChild(status)
+    
+    // Add game instructions
+    val instructions = document.createElement("div").asInstanceOf[dom.html.Div]
+    instructions.className = "instructions"
+    instructions.innerHTML = """
+      <h3>How to Play</h3>
+      <p>1. Win small tic-tac-toe boards to claim that space in the big board.</p>
+      <p>2. Your move determines which small board your opponent must play in next.</p>
+      <p>3. If sent to a completed board, your opponent can play in any available board.</p>
+      <p>4. Win three small boards in a row to win the game!</p>
+    """
+    
+    gameBoard.appendChild(instructions)
+    container.appendChild(gameBoard)
+
+  private def makeMove(game: Game, outerPos: Int, innerPos: Int, container: dom.Element): Unit =
+    game.makeMove(outerPos, innerPos) match
+      case Some(newGame) => renderGame(newGame, container)
+      case None => () // Invalid move
+
+  @JSExportTopLevel("startGame")
+  def startGame(): Unit =
+    document.addEventListener("DOMContentLoaded", _ => setupUI()) 

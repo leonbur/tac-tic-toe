@@ -1,0 +1,22 @@
+{
+  "name": "tac-tic-toe",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --no-sourcemap",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@scala-js/vite-plugin-scalajs": "^1.0.0",
+    "@raquo/vite-plugin-glob-resolver": "^0.1.0",
+    "@raquo/vite-plugin-import-side-effect": "^0.2.0",
+    "less": "^4.2.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "terser": "^5.28.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.2.10"
+  }
+}
