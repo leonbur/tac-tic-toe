@@ -45,7 +45,7 @@ export default defineConfig({
     })
   ],
   build: {
-    outDir: "dist",
+    outDir: "../docs",
     assetsDir: "assets", // path relative to outDir
     // outDir: "../server/src/main/resources/static", // #TODO can we do this directly?
     cssCodeSplit: false,  // false = Load all CSS upfront

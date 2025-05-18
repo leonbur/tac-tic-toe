@@ -23,3 +23,6 @@ project/metals.sbt
 
 # Scala-CLI
 .scala-build/
+
+# Cursor
+.cursor/
