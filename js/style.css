@@ -125,7 +125,7 @@ button:focus-visible {
   border: 3px solid #646cff;
   border-radius: 8px;
   padding: 10px;
-  background-color: rgba(100, 108, 255, 0.1);
+  background-color: rgba(100, 185, 255, 0.35);
   width: 140px;
   height: 140px;
   display: flex;
