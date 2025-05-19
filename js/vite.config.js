@@ -8,7 +8,7 @@ import rollupCopyPlugin from 'rollup-plugin-copy'
 import path from "path";
 
 export default defineConfig({
-  base: "/",
+  base: "./",
   publicDir: "public",
   plugins: [
     scalaJSPlugin({
