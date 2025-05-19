@@ -47,7 +47,7 @@ export default defineConfig({
   build: {
     outDir: "../docs",
     assetsDir: "assets", // path relative to outDir
-    // outDir: "../server/src/main/resources/static", // #TODO can we do this directly?
+    emptyOutDir: true, // clean the output directory before each build
     cssCodeSplit: false,  // false = Load all CSS upfront
     rollupOptions: {
       plugins: [rollupPluginSourcemaps()],
