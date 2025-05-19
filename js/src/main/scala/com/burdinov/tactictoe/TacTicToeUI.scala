@@ -121,7 +121,18 @@ object TacTicToeUI:
     else
       val nextMoveInfo = game.nextValidBoard match
         case Some(pos) if game.isTargetBoardPlayable(pos) =>
-          s"${game.currentPlayer.asString}'s turn - Must play in board $pos"
+          val location = pos match
+            case 0 => "Top Left"
+            case 1 => "Top Center" 
+            case 2 => "Top Right"
+            case 3 => "Middle Left"
+            case 4 => "Middle Center"
+            case 5 => "Middle Right" 
+            case 6 => "Bottom Left"
+            case 7 => "Bottom Center"
+            case 8 => "Bottom Right"
+            case _ => pos.toString
+          s"${game.currentPlayer.asString}'s turn - Must play in the $location board"
         case Some(_) =>
           s"${game.currentPlayer.asString}'s turn - Can play in any available board"
         case None =>
