@@ -1,26 +1,33 @@
 package com.burdinov.tactictoe
 
 import com.burdinov.tactictoe.Player.*
+import com.burdinov.tactictoe.bots.RandomBot
 import scala.io.StdIn.readLine
+import scala.util.Random
 
 @main
 def main(): Unit =
   var game = Game.emptyNested
 
   println("Welcome to Tac-Tic-Toe!")
+  println("Do you want to play against a bot? (y/n): ")
+  val playBot = readLine().trim.toLowerCase.startsWith("y")
+
+  val (humanPlayer, botPlayer) =
+    if playBot then
+      if Random.nextBoolean() then (X, O) else (O, X)
+    else (X, O) // default, not used if not playing bot
+
+  if playBot then
+    println(s"You are $humanPlayer. Bot is $botPlayer. ${if (humanPlayer == X) "You start." else "Bot starts."}")
+
   println("Initial board:")
   println(gameToString(game))
-  
-  while game.getWinner.isEmpty && !game.isFull do
+
+  def humanMove(): Unit = {
     println(s"\nCurrent player: ${game.currentPlayer}")
-    
-    // Get valid board number
     val board = getValidInput("Enter board number (0-8): ", 0, 8)
-    
-    // Get valid position
     val position = getValidInput("Enter position (0-8): ", 0, 8)
-    
-    // Try to make the move
     game.makeMove(board, position) match
       case Some(newGame) =>
         game = newGame
@@ -32,6 +39,39 @@ def main(): Unit =
       case None =>
         println(s"\nInvalid move: board $board, position $position")
         println("Please try again.")
+        humanMove()
+  }
+
+  def botMove(): Unit = {
+    println(s"\nBot ($botPlayer) is thinking...")
+    Thread.sleep(500)
+    RandomBot.randomMove(game) match
+      case Some((board, position)) =>
+        println(s"Bot plays in board $board, position $position")
+        game.makeMove(board, position) match
+          case Some(newGame) =>
+            game = newGame
+            println("\nBoard after move:")
+            println(gameToString(game))
+            game.getWinner.foreach(winner => println(s"\nGame won by $winner!"))
+            if game.isFull && game.getWinner.isEmpty then
+              println("\nGame ended in a tie!")
+          case None =>
+            println("Bot tried an invalid move! This should not happen.")
+            botMove()
+      case None =>
+        println("Bot cannot make a move.")
+  }
+
+  if playBot then
+    while game.getWinner.isEmpty && !game.isFull do
+      if game.currentPlayer == humanPlayer then
+        humanMove()
+      else
+        botMove()
+  else
+    while game.getWinner.isEmpty && !game.isFull do
+      humanMove()
 
 def getValidInput(prompt: String, min: Int, max: Int): Int =
   var input: Option[Int] = None
