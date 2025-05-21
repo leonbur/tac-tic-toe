@@ -13,21 +13,6 @@ object TacTicToeUI:
   def setupUI(): Unit =
     val menu = document.getElementById("menu").asInstanceOf[dom.html.Element]
     val app = document.getElementById("app").asInstanceOf[dom.html.Element]
-    menu.innerHTML = """
-      <div class='menu'>
-        <img src='favicon.svg' alt='Tac-Tic-Toe Logo' class='logo'/>
-        <h2>Welcome to Tac-Tic-Toe!</h2>
-        <button id='play-human'>Play vs Human</button>
-        <button id='play-bot'>Play vs Bot</button>
-        <div class='instructions' style='max-width: 400px; margin-top: 2rem;'>
-          <h3>How to Play</h3>
-          <p>1. Win small tic-tac-toe boards to claim that space in the big board.</p>
-          <p>2. Your move determines which small board your opponent must play in next.</p>
-          <p>3. If sent to a completed board, your opponent can play in any available board.</p>
-          <p>4. Win three small boards in a row to win the game!</p>
-        </div>
-      </div>
-    """
     app.asInstanceOf[dom.html.Element].style.display = "none"
     document.getElementById("play-human").addEventListener("click", _ => {
       menu.asInstanceOf[dom.html.Element].style.display = "none"

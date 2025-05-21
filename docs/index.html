@@ -5,11 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="./assets/favicon-BfFU2n6f.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tac-Tic-Toe</title>
-    <script type="module" crossorigin src="./assets/index-Cu7YBdof.js"></script>
+    <script type="module" crossorigin src="./assets/index-DiDSu-he.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/style-Cr-0yh5_.css">
   </head>
   <body>
-    <div id="menu"></div>
+    <div id="menu">
+      <div class='menu'>
+        <img src='data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3e%3c!--%20Grid%20--%3e%3cline%20x1='21'%20y1='5'%20x2='21'%20y2='59'%20stroke='black'%20stroke-width='4'/%3e%3cline%20x1='43'%20y1='5'%20x2='43'%20y2='59'%20stroke='black'%20stroke-width='4'/%3e%3cline%20x1='5'%20y1='21'%20x2='59'%20y2='21'%20stroke='black'%20stroke-width='4'/%3e%3cline%20x1='5'%20y1='43'%20x2='59'%20y2='43'%20stroke='black'%20stroke-width='4'/%3e%3c!--%20X%20in%20top-left%20--%3e%3cline%20x1='8'%20y1='8'%20x2='20'%20y2='20'%20stroke='red'%20stroke-width='4'/%3e%3cline%20x1='20'%20y1='8'%20x2='8'%20y2='20'%20stroke='red'%20stroke-width='4'/%3e%3c!--%20O%20in%20center%20--%3e%3ccircle%20cx='32'%20cy='32'%20r='8'%20stroke='blue'%20stroke-width='4'%20fill='none'/%3e%3c/svg%3e' alt='Tac-Tic-Toe Logo' class='logo'/>
+        <h2>Welcome to Tac-Tic-Toe!</h2>
+        <button id='play-human'>Play vs Human</button>
+        <button id='play-bot'>Play vs Bot</button>
+        <div class='instructions' style='max-width: 400px; margin-top: 2rem;'>
+          <h3>How to Play</h3>
+          <p>1. Win small tic-tac-toe boards to claim that space in the big board.</p>
+          <p>2. Your move determines which small board your opponent must play in next.</p>
+          <p>3. If sent to a completed board, your opponent can play in any available board.</p>
+          <p>4. Win three small boards in a row to win the game!</p>
+        </div>
+      </div>
+    </div>
     <div id="app" style="display:none"></div>
   </body>
   <footer>
