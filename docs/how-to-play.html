@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <title>How to Play Tac-Tic-Toe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="content">
+      <h1>How to Play Tac-Tic-Toe</h1>
+      <section>
+        <h2>Objective</h2>
+        <p>The goal is to win three small tic-tac-toe boards in a row like in the classic game to claim victory - on the big board.</p>
+      </section>
+      <section>
+        <h2>Basic Rules</h2>
+        <ol>
+          <li>The big board is a 3x3 grid of small tic-tac-toe boards.</li>
+          <li>When a player plays in a cell of a small board, the index of that cell is index of the small board that the next player must play in.</li>
+          <img src="images/1-m.png" alt="initial board" /><br/>
+          <img src="images/2-m.png" alt="board after X plays in Left-Middle and sends O to play in the Top-Right board" />
+          <li>Win small tic-tac-toe boards to claim that space in the big board.</li>
+          <li>If sent to a completed board, your opponent can play in any available board.</li>
+          <img src="images/3-m.png" alt="O plays to the middle of the board which is already completed" /><br/>
+          <img src="images/4-m.png" alt="X can play anywhere" /><br/>
+          <li>Players alternate turns, starting with X.</li>
+          <li>If a small board results in a draw, it is considered a neutral space.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Strategy Tips</h2>
+        <ul>
+          <li>Plan ahead and think about your opponent's possible moves.</li>
+          <li>Control the center board to increase your chances of winning.</li>
+          <li>Force your opponent into boards where you have an advantage.</li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html> 
