@@ -1,4 +1,5 @@
 import {defineConfig} from "vite";
+import { VitePWA } from 'vite-plugin-pwa'
 import scalaJSPlugin from "@scala-js/vite-plugin-scalajs";
 // import injectHtmlVarsPlugin from "./vite-plugins/inject-html-vars.js";
 import rollupPluginSourcemaps from "rollup-plugin-sourcemaps";
@@ -11,6 +12,7 @@ export default defineConfig({
   base: "./",
   publicDir: "public",
   plugins: [
+    VitePWA({ registerType: 'autoUpdate' }),
     scalaJSPlugin({
       cwd: "..", // path to build.sbt
       projectID: "tacTicToeJS" // scala.js project name in build.sbt
