@@ -1,4 +1,4 @@
-# <img src="js/favicon.svg" width="30"/> Tac-Tic-Toe (tactical tic-tac-toe) 
+# <img src="js/assets/favicon.svg" width="30"/> Tac-Tic-Toe (tactical tic-tac-toe) 
 
 A nested Tic-Tac-Toe game implemented in Scala and Scala.js. The game features a 3x3 grid where each cell contains another 3x3 grid, creating a meta-game of Tic-Tac-Toe where your move determines which grid your opponent must play in next.
 
